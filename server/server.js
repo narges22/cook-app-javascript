@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
-import { generateRecipeId } from "./unitls.js";
+import { generateRecipeId } from "./utils.js";
 
 // Replace __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -40,7 +40,6 @@ app.post("/api/data", (req, res) => {
 app.post("/api/recipes", (req, res) => {
   try {
     const { name, ingredients } = req.body;
-
     // Validate required fields
     if (!name || !ingredients || !Array.isArray(ingredients)) {
       return res.status(400).json({

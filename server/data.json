@@ -1,10 +1,35 @@
 {
   "ingredients": [
-    { "id": "ing1", "name": "Flour", "unit": "grams", "category": "Baking" },
-    { "id": "ing2", "name": "Sugar", "unit": "grams", "category": "Baking" },
-    { "id": "ing3", "name": "Eggs", "unit": "pieces", "category": "Dairy" },
-    { "id": "ing4", "name": "Milk", "unit": "ml", "category": "Dairy" },
-    { "id": "ing5", "name": "Butter", "unit": "grams", "category": "Dairy" },
+    {
+      "id": "ing1",
+      "name": "Flour",
+      "unit": "grams",
+      "category": "Baking"
+    },
+    {
+      "id": "ing2",
+      "name": "Sugar",
+      "unit": "grams",
+      "category": "Baking"
+    },
+    {
+      "id": "ing3",
+      "name": "Eggs",
+      "unit": "pieces",
+      "category": "Dairy"
+    },
+    {
+      "id": "ing4",
+      "name": "Milk",
+      "unit": "ml",
+      "category": "Dairy"
+    },
+    {
+      "id": "ing5",
+      "name": "Butter",
+      "unit": "grams",
+      "category": "Dairy"
+    },
     {
       "id": "ing6",
       "name": "Salt",
@@ -23,7 +48,12 @@
       "unit": "teaspoons",
       "category": "Flavoring"
     },
-    { "id": "ing9", "name": "Olive Oil", "unit": "ml", "category": "Oil" },
+    {
+      "id": "ing9",
+      "name": "Olive Oil",
+      "unit": "ml",
+      "category": "Oil"
+    },
     {
       "id": "ing10",
       "name": "Tomato",
@@ -36,32 +66,84 @@
       "id": "rec1",
       "name": "Pancakes",
       "ingredients": [
-        { "ingredientId": "ing1", "quantity": 200 },
-        { "ingredientId": "ing2", "quantity": 50 },
-        { "ingredientId": "ing3", "quantity": 2 },
-        { "ingredientId": "ing4", "quantity": 300 },
-        { "ingredientId": "ing5", "quantity": 50 },
-        { "ingredientId": "ing6", "quantity": 0.5 },
-        { "ingredientId": "ing7", "quantity": 1 },
-        { "ingredientId": "ing8", "quantity": 1 }
+        {
+          "ingredientId": "ing1",
+          "quantity": 200
+        },
+        {
+          "ingredientId": "ing2",
+          "quantity": 50
+        },
+        {
+          "ingredientId": "ing3",
+          "quantity": 2
+        },
+        {
+          "ingredientId": "ing4",
+          "quantity": 300
+        },
+        {
+          "ingredientId": "ing5",
+          "quantity": 50
+        },
+        {
+          "ingredientId": "ing6",
+          "quantity": 0.5
+        },
+        {
+          "ingredientId": "ing7",
+          "quantity": 1
+        },
+        {
+          "ingredientId": "ing8",
+          "quantity": 1
+        }
       ]
     },
     {
       "id": "rec2",
       "name": "Scrambled Eggs",
       "ingredients": [
-        { "ingredientId": "ing3", "quantity": 3 },
-        { "ingredientId": "ing5", "quantity": 20 },
-        { "ingredientId": "ing6", "quantity": 0.25 }
+        {
+          "ingredientId": "ing3",
+          "quantity": 3
+        },
+        {
+          "ingredientId": "ing5",
+          "quantity": 20
+        },
+        {
+          "ingredientId": "ing6",
+          "quantity": 0.25
+        }
       ]
     },
     {
       "id": "rec3",
       "name": "Tomato Salad",
       "ingredients": [
-        { "ingredientId": "ing10", "quantity": 2 },
-        { "ingredientId": "ing9", "quantity": 30 },
-        { "ingredientId": "ing6", "quantity": 0.5 }
+        {
+          "ingredientId": "ing10",
+          "quantity": 2
+        },
+        {
+          "ingredientId": "ing9",
+          "quantity": 30
+        },
+        {
+          "ingredientId": "ing6",
+          "quantity": 0.5
+        }
+      ]
+    },
+    {
+      "id": "rec4",
+      "name": "test rec",
+      "ingredients": [
+        {
+          "ingredientId": "ing3",
+          "quantity": 4
+        }
       ]
     }
   ]
