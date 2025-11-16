@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import { categoryOptions, unitOptions, validationSchema } from "./helper";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "primereact/dropdown";
-import { ProgressSpinner } from "primereact/progressspinner";
+import { Divider } from "primereact/divider";
 
 interface FormValues {
   name: string;
@@ -58,9 +58,12 @@ const AddNewIngredient = () => {
         />
         <h1 className="text-lg font-bold">New Ingredient</h1>
       </div>
+      <Divider />
       <form>
         <div className="flex flex-col items-start gap-2">
-          <label htmlFor="name">Name *</label>
+          <label htmlFor="name" className="text-gray-600">
+            Name *
+          </label>
           <InputText
             id="name"
             name="name"
@@ -83,7 +86,9 @@ const AddNewIngredient = () => {
         </div>
 
         <div className="flex flex-col items-start gap-2 w-full pt-4">
-          <label htmlFor="category">Category *</label>
+          <label htmlFor="category" className="text-gray-600">
+            Category *
+          </label>
           <Dropdown
             id="category"
             name="category"
@@ -107,7 +112,9 @@ const AddNewIngredient = () => {
         </div>
 
         <div className="flex flex-col items-start gap-2 w-full pt-4">
-          <label htmlFor="unit">Unit *</label>
+          <label htmlFor="unit" className="text-gray-600">
+            Unit *
+          </label>
           <Dropdown
             id="unit"
             name="unit"

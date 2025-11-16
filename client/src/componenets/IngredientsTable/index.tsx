@@ -26,9 +26,10 @@ const IngredientsTable = () => {
     <>
       <div className="flex justify-end pb-3">
         <Button
-          label="Add New Recipe"
+          label="Add New Ingredient"
           icon="pi pi-external-link"
           onClick={() => navigate("/add-new-ingredient")}
+          className="!text-sm"
         />
       </div>
       <DataTable

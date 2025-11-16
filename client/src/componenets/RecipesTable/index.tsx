@@ -1,24 +1,15 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { RecipeType } from "../../utils/types";
-import {
-  useIngredients,
-  useRecipes,
-  useRecipesActions,
-} from "../../store/store";
-import { transformedIngredients } from "../../utils/helper";
+import { useRecipes, useRecipesActions } from "../../store/store";
+import { formatIngredients } from "../../utils/helper";
 import { Button } from "primereact/button";
-import AddNewRecipe from "../../pages/AddNewRecipe";
 import { useNavigate } from "react-router-dom";
 
 const RecepiesTable = () => {
   const recipesData = useRecipes();
-  const ingredientsData = useIngredients();
   const { deleteRecipe } = useRecipesActions();
   const navigate = useNavigate();
-  const formatIngredients = (row: RecipeType) => {
-    return transformedIngredients(ingredientsData, row.ingredients);
-  };
 
   const renderActions = (rowData: RecipeType) => {
     return (
@@ -40,6 +31,7 @@ const RecepiesTable = () => {
           label="Add New Recipe"
           icon="pi pi-external-link"
           onClick={() => navigate("/add-new-recipe")}
+          className="!text-sm"
         />
       </div>
       <DataTable
@@ -52,7 +44,7 @@ const RecepiesTable = () => {
         <Column
           field="ingredients"
           header="Ingredients"
-          body={(row: RecipeType) => formatIngredients(row)}
+          body={(row: RecipeType) => formatIngredients(row.ingredients)}
         ></Column>
         <Column
           header="Actions"

@@ -7,8 +7,9 @@ import { IngredientListType } from "../../utils/types";
 import { validationSchema } from "./helper";
 import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
-import { Chip } from "primereact/chip";
 import { useNavigate } from "react-router-dom";
+import { Divider } from "primereact/divider";
+import IngredientChip from "../../componenets/IngredientChip";
 
 interface FormValues {
   name: string;
@@ -91,9 +92,12 @@ const AddNewRecipe = () => {
         />
         <h1 className="text-lg font-bold">New Recipe</h1>
       </div>
+      <Divider />
       <form>
         <div className="flex flex-col items-start gap-2">
-          <label htmlFor="name">Name *</label>
+          <label htmlFor="name" className="text-gray-600">
+            Name *
+          </label>
           <InputText
             id="name"
             name="name"
@@ -117,7 +121,9 @@ const AddNewRecipe = () => {
         <p className="text-left pt-5 pb-3">Choose the ingredients</p>
         <div className="flex gap-3">
           <div className="flex flex-col items-start gap-2 w-full">
-            <label htmlFor="ingredient">Ingredient *</label>
+            <label htmlFor="ingredient" className="text-gray-600">
+              Ingredient *
+            </label>
             <Dropdown
               id="ingredient"
               options={ingredientOptions}
@@ -130,7 +136,9 @@ const AddNewRecipe = () => {
             />
           </div>
           <div className="flex flex-col items-start gap-2 w-full">
-            <label htmlFor="quantity">Quantity</label>
+            <label htmlFor="quantity" className="text-gray-600">
+              Quantity
+            </label>
             <InputNumber
               id="quantity"
               name="quantity"
@@ -154,18 +162,21 @@ const AddNewRecipe = () => {
               onClick={addIngredient}
               className="w-full"
               outlined
-              disabled={loading}
+              disabled={
+                loading || !formik.values.ingredient || !formik.values.quantity
+              }
             />
           </div>
         </div>
         <div className="py-3 flex flex-col items-start gap-2">
           <div className="flex items-start gap-2 flex-wrap">
             {formik.values.ingredients.map((ing) => (
-              <Chip
+              <IngredientChip
                 key={ing.ingredientId}
-                label={ing.ingredientId}
-                removable={!loading}
-                onRemove={() => removeIngredient(ing.ingredientId)}
+                ingredientId={ing.ingredientId}
+                qty={ing.quantity}
+                onRemove={removeIngredient}
+                disabled={loading}
               />
             ))}
           </div>
