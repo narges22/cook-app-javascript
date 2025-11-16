@@ -1,0 +1,17 @@
+/* .p-menubar .p-menuitem-link.p-menuitem-active,
+.p-menubar .p-menuitem-link:hover {
+  background-color: rgb(243 232 255) !important;
+  color: rgb(126 34 206) !important;
+}
+
+.p-menubar .p-menuitem-link.p-menuitem-active .p-menuitem-icon,
+.p-menubar .p-menuitem-link:hover .p-menuitem-icon {
+  color: rgb(126 34 206) !important;
+} */
+.p-menuitem a {
+  cursor: pointer;
+}
+
+.p-menuitem.p-menuitem-active a span {
+  color: #6366f1 !important;
+}
