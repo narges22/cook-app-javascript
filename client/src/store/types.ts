@@ -14,16 +14,17 @@ export type RecepiesSlice = {
     deleteRecipe: (id: string) => Promise<Response>;
     addRecipe: (payload: RecipePayloadType) => Promise<RecipeResponseType>;
   };
+};
+
+export type IngredientsSlice = {
+  ingredients: IngredientType[];
+  transformedIngredients: Record<string, IngredientType>;
   ingredientActions: {
     deleteIngredient: (id: string) => Promise<Response>;
     addIngredient: (
       payload: IngredientPayloadType
     ) => Promise<IngredientResponseType>;
   };
-};
-
-export type IngredientsSlice = {
-  ingredients: IngredientType[];
 };
 
 export interface CookStore extends RecepiesSlice, IngredientsSlice {}

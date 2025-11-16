@@ -1,11 +1,8 @@
+import { useTransformedIngredients } from "../store/store";
 import { IngredientListType, IngredientType } from "./types";
 
-export const transformedIngredients = (
-  ingredients: IngredientType[],
-  rowIngredients: IngredientListType[]
-) => {
-  const transformedIngredients: Record<string, IngredientType> = {};
-  ingredients.forEach((i) => (transformedIngredients[i.id] = i));
+export const formatIngredients = (rowIngredients: IngredientListType[]) => {
+  const transformedIngredients = useTransformedIngredients();
 
   const ingString = rowIngredients.reduce((acc, ing) => {
     if (transformedIngredients.hasOwnProperty(ing.ingredientId)) {
