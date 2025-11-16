@@ -1,4 +1,9 @@
-import { IngredientType, RecipeType } from "../utils/types";
+import {
+  IngredientType,
+  RecipePayloadType,
+  RecipeResponseType,
+  RecipeType,
+} from "../utils/types";
 
 export type RecepiesSlice = {
   recipes: RecipeType[];
@@ -6,6 +11,7 @@ export type RecepiesSlice = {
     setRecipes: (recipes: RecipeType[]) => void;
     fetchRecipes: () => Promise<void>;
     deleteRecipe: (id: string) => Promise<Response>;
+    addRecipe: (payload: RecipePayloadType) => Promise<RecipeResponseType>;
   };
   ingredientActions: {
     deleteIngredient: (id: string) => Promise<Response>;

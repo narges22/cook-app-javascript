@@ -15,3 +15,12 @@ export type RecipeType = {
   name: string;
   ingredients: IngredientListType[];
 };
+
+export type RecipePayloadType = {
+  name: string;
+  ingredients: IngredientListType[];
+};
+
+export interface RecipeResponseType extends Response {
+  recipe: RecipeType;
+}

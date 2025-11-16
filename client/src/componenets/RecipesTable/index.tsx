@@ -8,12 +8,14 @@ import {
 } from "../../store/store";
 import { transformedIngredients } from "../../utils/helper";
 import { Button } from "primereact/button";
+import AddNewRecipe from "../../pages/AddNewRecipe";
+import { useNavigate } from "react-router-dom";
 
 const RecepiesTable = () => {
   const recipesData = useRecipes();
   const ingredientsData = useIngredients();
   const { deleteRecipe } = useRecipesActions();
-
+  const navigate = useNavigate();
   const formatIngredients = (row: RecipeType) => {
     return transformedIngredients(ingredientsData, row.ingredients);
   };
@@ -33,6 +35,13 @@ const RecepiesTable = () => {
 
   return (
     <>
+      <div className="flex justify-end pb-3">
+        <Button
+          label="Add New Recipe"
+          icon="pi pi-external-link"
+          onClick={() => navigate("/add-new-recipe")}
+        />
+      </div>
       <DataTable
         value={recipesData}
         tableStyle={{ minWidth: "50rem" }}

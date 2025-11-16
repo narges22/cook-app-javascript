@@ -1,0 +1,151 @@
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import { useState } from "react";
+import { useIngredients, useRecipesActions } from "../../store/store";
+import { useFormik } from "formik";
+import { IngredientListType } from "../../utils/types";
+import { validationSchema } from "./helper";
+import { Dropdown } from "primereact/dropdown";
+import { InputNumber } from "primereact/inputnumber";
+import { Chip } from "primereact/chip";
+import { useNavigate } from "react-router-dom";
+
+interface FormValues {
+  name: string;
+  ingredients: IngredientListType[];
+  ingredient: string;
+  quantity: number;
+}
+
+const AddNewRecipe = () => {
+  const ingredientsData = useIngredients();
+
+  const { addRecipe } = useRecipesActions();
+  const navigate = useNavigate();
+
+  const formik = useFormik<FormValues>({
+    initialValues: {
+      name: "",
+      ingredients: [],
+      ingredient: "",
+      quantity: 1,
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      addRecipe({
+        name: values.name,
+        ingredients: values.ingredients,
+      });
+      formik.resetForm();
+      navigate("/");
+    },
+  });
+
+  const ingredientOptions = ingredientsData.map((ing) => ({
+    label: ing.name,
+    value: ing.id,
+  }));
+
+  const addIngredient = () => {
+    if (formik.values.ingredient && formik.values.quantity) {
+      const newIngredient: IngredientListType = {
+        ingredientId: formik.values.ingredient,
+        quantity: formik.values.quantity,
+      };
+      formik.setFieldValue("ingredients", [
+        ...formik.values.ingredients,
+        newIngredient,
+      ]);
+      formik.setFieldValue("ingredient", "");
+      formik.setFieldValue("quantity", 1);
+    }
+  };
+
+  const removeIngredient = (ingredientId: string) => {
+    const updatedIngredients = formik.values.ingredients.filter(
+      (ing) => ing.ingredientId !== ingredientId
+    );
+    formik.setFieldValue("ingredients", updatedIngredients);
+    return !!ingredientId;
+  };
+
+  return (
+    <div className="shadow-sm radius-2 rounded-lg px-4 py-8 bg-white">
+      <h1 className="text-lg font-bold pb-2">New Recipe</h1>
+      <form>
+        <div className="flex flex-col items-start gap-2">
+          <label htmlFor="name">Name</label>
+          <InputText
+            id="name"
+            aria-describedby="name-help"
+            className="w-full"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          <small id="name-help"></small>
+        </div>
+        <p className="text-left pt-5 pb-3">Choose the ingredients</p>
+        <div className="flex gap-3">
+          <div className="flex flex-col items-start gap-2 w-full">
+            <label htmlFor="ingredient">Ingredient</label>
+            <Dropdown
+              id="ingredient"
+              options={ingredientOptions}
+              placeholder="Select an ingredient"
+              className="w-full"
+              value={formik.values.ingredient}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+          </div>
+          <div className="flex flex-col items-start gap-2 w-full">
+            <label htmlFor="quantity">Quantity</label>
+            <InputNumber
+              id="quantity"
+              name="quantity"
+              value={formik.values.quantity}
+              onValueChange={(e) =>
+                formik.setFieldValue("quantity", e.value || 1)
+              }
+              onBlur={formik.handleBlur}
+              min={1}
+              step={1}
+              showButtons
+              className="w-full"
+            />
+          </div>
+
+          <div className="flex items-end">
+            <Button
+              label="Save"
+              type="button"
+              onClick={addIngredient}
+              className="w-full"
+              outlined
+            />
+          </div>
+        </div>
+        <div className="py-3 flex items-start gap-2">
+          {formik.values.ingredients.map((ing) => (
+            <Chip
+              key={ing.ingredientId}
+              label={ing.ingredientId}
+              removable
+              onRemove={() => removeIngredient(ing.ingredientId)}
+            />
+          ))}
+        </div>
+      </form>
+      <div className="flex justify-end py-3 pt-6">
+        <Button
+          label="Submit"
+          type="submit"
+          onClick={() => formik.handleSubmit()}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default AddNewRecipe;
