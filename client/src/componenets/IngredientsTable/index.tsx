@@ -3,10 +3,12 @@ import { useIngredients, useIngredientsActions } from "../../store/store";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { IngredientType } from "../../utils/types";
+import { useNavigate } from "react-router-dom";
 
 const IngredientsTable = () => {
   const ingredientsData = useIngredients();
   const { deleteIngredient } = useIngredientsActions();
+  const navigate = useNavigate();
 
   const renderActions = (rowData: IngredientType) => {
     return (
@@ -22,6 +24,13 @@ const IngredientsTable = () => {
   };
   return (
     <>
+      <div className="flex justify-end pb-3">
+        <Button
+          label="Add New Recipe"
+          icon="pi pi-external-link"
+          onClick={() => navigate("/add-new-ingredient")}
+        />
+      </div>
       <DataTable
         value={ingredientsData}
         tableStyle={{ minWidth: "50rem" }}

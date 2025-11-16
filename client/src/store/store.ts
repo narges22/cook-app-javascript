@@ -1,12 +1,14 @@
 import { create } from "zustand";
-import { IngredientType, RecipePayloadType, RecipeType } from "../utils/types";
+import { RecipeType } from "../utils/types";
 import {
+  addIngredient,
   addRecipe,
   deleteIngredient,
   deleteRecipe,
   getInitialData,
 } from "../api";
 import { CookStore } from "./types";
+import { RecipePayloadType } from "../api/type";
 
 export const useCookStore = create<CookStore>((set) => ({
   recipes: [],
@@ -50,6 +52,17 @@ export const useCookStore = create<CookStore>((set) => ({
           set((state) => ({
             ...state,
             ingredients: state.ingredients.filter((ing) => ing.id !== id),
+          }));
+        }
+        return res;
+      });
+    },
+    addIngredient: async (payload) => {
+      return addIngredient(payload).then((res) => {
+        if (res.status === 200) {
+          set((state) => ({
+            ...state,
+            ingredients: [...state.ingredients, res.ingredient],
           }));
         }
         return res;

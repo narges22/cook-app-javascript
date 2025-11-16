@@ -1,9 +1,10 @@
 import {
-  IngredientType,
+  IngredientPayloadType,
+  IngredientResponseType,
   RecipePayloadType,
   RecipeResponseType,
-  RecipeType,
-} from "../utils/types";
+} from "../api/type";
+import { IngredientType, RecipeType } from "../utils/types";
 
 export type RecepiesSlice = {
   recipes: RecipeType[];
@@ -15,6 +16,9 @@ export type RecepiesSlice = {
   };
   ingredientActions: {
     deleteIngredient: (id: string) => Promise<Response>;
+    addIngredient: (
+      payload: IngredientPayloadType
+    ) => Promise<IngredientResponseType>;
   };
 };
 
