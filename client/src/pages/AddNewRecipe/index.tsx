@@ -22,6 +22,7 @@ const AddNewRecipe = () => {
 
   const { addRecipe } = useRecipesActions();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -31,13 +32,22 @@ const AddNewRecipe = () => {
       quantity: 1,
     },
     validationSchema,
-    onSubmit: (values) => {
-      addRecipe({
-        name: values.name,
-        ingredients: values.ingredients,
-      });
-      formik.resetForm();
-      navigate("/");
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const res = await addRecipe({
+          name: values.name,
+          ingredients: values.ingredients,
+        });
+        if (res.recipe) {
+          formik.resetForm();
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Error adding recipe:", error);
+      } finally {
+        setLoading(false);
+      }
     },
   });
 
@@ -74,21 +84,31 @@ const AddNewRecipe = () => {
       <h1 className="text-lg font-bold pb-2">New Recipe</h1>
       <form>
         <div className="flex flex-col items-start gap-2">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">Name *</label>
           <InputText
             id="name"
+            name="name"
             aria-describedby="name-help"
-            className="w-full"
+            className={`w-full ${
+              formik.touched.name && formik.errors.name ? "p-invalid" : ""
+            }`}
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            disabled={loading}
           />
-          <small id="name-help"></small>
+          <div className="h-3">
+            {formik.touched.name && formik.errors.name && (
+              <small id="name-help" className="p-error">
+                {formik.errors.name}
+              </small>
+            )}
+          </div>
         </div>
         <p className="text-left pt-5 pb-3">Choose the ingredients</p>
         <div className="flex gap-3">
           <div className="flex flex-col items-start gap-2 w-full">
-            <label htmlFor="ingredient">Ingredient</label>
+            <label htmlFor="ingredient">Ingredient *</label>
             <Dropdown
               id="ingredient"
               options={ingredientOptions}
@@ -97,6 +117,7 @@ const AddNewRecipe = () => {
               value={formik.values.ingredient}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              disabled={loading}
             />
           </div>
           <div className="flex flex-col items-start gap-2 w-full">
@@ -113,6 +134,7 @@ const AddNewRecipe = () => {
               step={1}
               showButtons
               className="w-full"
+              disabled={loading}
             />
           </div>
 
@@ -123,18 +145,29 @@ const AddNewRecipe = () => {
               onClick={addIngredient}
               className="w-full"
               outlined
+              disabled={loading}
             />
           </div>
         </div>
-        <div className="py-3 flex items-start gap-2">
-          {formik.values.ingredients.map((ing) => (
-            <Chip
-              key={ing.ingredientId}
-              label={ing.ingredientId}
-              removable
-              onRemove={() => removeIngredient(ing.ingredientId)}
-            />
-          ))}
+        <div className="py-3 flex flex-col items-start gap-2">
+          <div className="flex items-start gap-2 flex-wrap">
+            {formik.values.ingredients.map((ing) => (
+              <Chip
+                key={ing.ingredientId}
+                label={ing.ingredientId}
+                removable={!loading}
+                onRemove={() => removeIngredient(ing.ingredientId)}
+              />
+            ))}
+          </div>
+          <div className="h-3">
+            {formik.touched.ingredients && formik.errors.ingredients && (
+              <small className="p-error">
+                {formik.values.ingredients.length < 1 &&
+                  "At least one ingredient is required"}
+              </small>
+            )}
+          </div>
         </div>
       </form>
       <div className="flex justify-end py-3 pt-6">
@@ -142,6 +175,8 @@ const AddNewRecipe = () => {
           label="Submit"
           type="submit"
           onClick={() => formik.handleSubmit()}
+          disabled={loading}
+          loading={loading}
         />
       </div>
     </div>
