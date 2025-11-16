@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
-import { generateRecipeId } from "./utils.js";
+import { generateRecipeId, generateIngredientId } from "./utils.js";
 
 // Replace __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +34,50 @@ app.get("/api/data", (req, res) => {
 app.post("/api/data", (req, res) => {
   fs.writeFileSync(dataFile, JSON.stringify(req.body, null, 2));
   res.json({ message: "Data saved!" });
+});
+
+// POST ingredient - add a new ingredient to the ingredients list
+app.post("/api/ingredients", (req, res) => {
+  try {
+    const { name, unit, category } = req.body;
+
+    // Validate required fields
+    if (!name || !unit || !category) {
+      return res.status(400).json({
+        message:
+          "Invalid ingredient data. Name, unit, and category are required.",
+      });
+    }
+
+    // Read existing data
+    const data = JSON.parse(fs.readFileSync(dataFile, "utf-8"));
+
+    // Generate a new ingredient ID
+    const newIngredientId = generateIngredientId(data.ingredients, req.body.id);
+
+    // Create new ingredient object
+    const newIngredient = {
+      id: newIngredientId,
+      name,
+      unit,
+      category,
+    };
+
+    // Add ingredient to the ingredients array
+    data.ingredients.push(newIngredient);
+
+    // Write updated data back to file
+    fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
+
+    res.status(200).json({
+      message: "Ingredient added successfully",
+      ingredient: newIngredient,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error adding ingredient", error: error.message });
+  }
 });
 
 // POST recipe - add a new recipe to the recipes list
@@ -67,7 +111,7 @@ app.post("/api/recipes", (req, res) => {
     // Write updated data back to file
     fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 
-    res.status(201).json({
+    res.status(200).json({
       message: "Recipe added successfully",
       recipe: newRecipe,
     });
