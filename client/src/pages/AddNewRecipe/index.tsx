@@ -81,7 +81,16 @@ const AddNewRecipe = () => {
 
   return (
     <div className="shadow-sm radius-2 rounded-lg px-4 py-8 bg-white">
-      <h1 className="text-lg font-bold pb-2">New Recipe</h1>
+      <div className="flex items-center gap-3 pb-2">
+        <Button
+          icon="pi pi-arrow-left"
+          rounded
+          text
+          onClick={() => navigate("/")}
+          aria-label="Back"
+        />
+        <h1 className="text-lg font-bold">New Recipe</h1>
+      </div>
       <form>
         <div className="flex flex-col items-start gap-2">
           <label htmlFor="name">Name *</label>

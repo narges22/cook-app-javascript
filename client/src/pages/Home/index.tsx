@@ -5,11 +5,6 @@ import { TabPanel, TabView } from "primereact/tabview";
 import IngredientsTable from "../../componenets/IngredientsTable";
 
 function Home() {
-  const { fetchRecipes } = useRecipesActions();
-  useEffect(() => {
-    fetchRecipes();
-  }, []);
-
   return (
     <div className="shadow-sm radius-2 rounded-lg px-4 py-8 bg-white">
       <TabView>

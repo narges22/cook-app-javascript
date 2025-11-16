@@ -14,5 +14,5 @@ export const transformedIngredients = (
     return acc;
   }, "");
 
-  return ingString;
+  return ingString.slice(0, -2); // Remove the last ", "
 };
