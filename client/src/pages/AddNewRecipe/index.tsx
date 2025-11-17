@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Divider } from "primereact/divider";
 import IngredientChip from "../../componenets/IngredientChip";
 import { showSuccess } from "../../utils/toast";
+import LabelText from "./Label";
 
 interface FormValues {
   name: string;
@@ -141,7 +142,7 @@ const AddNewRecipe = ({ toast }: AddNewRecipeProps) => {
           </div>
           <div className="flex flex-col items-start gap-2 w-full col-12 sm:col-6">
             <label htmlFor="quantity" className="text-gray-600">
-              Quantity
+              Quantity * <LabelText ingredientId={formik.values.ingredient} />
             </label>
             <InputNumber
               id="quantity"
