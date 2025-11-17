@@ -39,9 +39,9 @@ export const useCookStore = create<CookStore>((set) => ({
     },
     addRecipe: async (payload: RecipePayloadType) => {
       return addRecipe(payload).then((res) => {
-        if (res.status === 200) {
+        if (res.recipe) {
           set((state) => ({
-            ...StaticRange,
+            ...state,
             recipes: [...state.recipes, res.recipe],
           }));
         }
@@ -63,7 +63,7 @@ export const useCookStore = create<CookStore>((set) => ({
     },
     addIngredient: async (payload) => {
       return addIngredient(payload).then((res) => {
-        if (res.status === 200) {
+        if (res.ingredient) {
           set((state) => ({
             ...state,
             ingredients: [...state.ingredients, res.ingredient],
