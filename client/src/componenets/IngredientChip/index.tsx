@@ -1,5 +1,5 @@
 import { Chip } from "primereact/chip";
-import { useTransformedIngredients } from "../../store/store";
+import { useIngredientById } from "../../store/store";
 
 interface IngredientChipProps {
   ingredientId: string;
@@ -14,12 +14,10 @@ const IngredientChip = ({
   onRemove,
   disabled = false,
 }: IngredientChipProps) => {
-  const transformedIngredients = useTransformedIngredients();
+  const ingredient = useIngredientById(ingredientId);
 
-  const { name, unit } = transformedIngredients[ingredientId];
-
-  const ingredientName = name || ingredientId;
-  const ingredientUnit = unit || "";
+  const ingredientName = ingredient?.name || ingredientId;
+  const ingredientUnit = ingredient?.unit || "";
   const chipLabel = `${ingredientName} (${qty} ${ingredientUnit})`;
 
   return (

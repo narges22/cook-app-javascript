@@ -1,6 +1,6 @@
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import { RefObject, useState } from "react";
+import { RefObject, useMemo, useState } from "react";
 import { useIngredients, useRecipesActions } from "../../store/store";
 import { useFormik } from "formik";
 import { IngredientListType } from "../../utils/types";
@@ -57,10 +57,12 @@ const AddNewRecipe = ({ toast }: AddNewRecipeProps) => {
     },
   });
 
-  const ingredientOptions = ingredientsData.map((ing) => ({
-    label: ing.name,
-    value: ing.id,
-  }));
+  const ingredientOptions = useMemo(() => {
+    return ingredientsData.map((ing) => ({
+      label: ing.name,
+      value: ing.id,
+    }));
+  }, [ingredientsData]);
 
   const addIngredient = () => {
     if (formik.values.ingredient && formik.values.quantity) {
@@ -68,12 +70,13 @@ const AddNewRecipe = ({ toast }: AddNewRecipeProps) => {
         ingredientId: formik.values.ingredient,
         quantity: formik.values.quantity,
       };
-      formik.setFieldValue("ingredients", [
-        ...formik.values.ingredients,
-        newIngredient,
-      ]);
-      formik.setFieldValue("ingredient", "");
-      formik.setFieldValue("quantity", 1);
+
+      formik.setValues({
+        ...formik.values,
+        ingredients: [...formik.values.ingredients, newIngredient],
+        ingredient: "",
+        quantity: 1,
+      });
     }
   };
 

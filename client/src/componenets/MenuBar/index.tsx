@@ -5,7 +5,6 @@ import "./MenuBar.css";
 const MenuBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
   const items = [
     {
       label: "Recipes",

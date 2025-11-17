@@ -13,3 +13,9 @@ export const formatIngredients = (rowIngredients: IngredientListType[]) => {
 
   return ingString.slice(0, -2); // Remove the last ", "
 };
+
+export const transformIngredients = (ingredients: IngredientType[]) => {
+  const transformedIngredients: Record<string, IngredientType> = {};
+  ingredients.forEach((i) => (transformedIngredients[i.id] = i));
+  return transformedIngredients;
+};

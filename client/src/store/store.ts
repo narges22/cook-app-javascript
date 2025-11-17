@@ -9,6 +9,7 @@ import {
 } from "../api";
 import { CookStore } from "./types";
 import { RecipePayloadType } from "../api/type";
+import { transformIngredients } from "../utils/helper";
 
 export const useCookStore = create<CookStore>((set) => ({
   recipes: [],
@@ -18,12 +19,10 @@ export const useCookStore = create<CookStore>((set) => ({
     setRecipes: (recipes) => set({ recipes }),
     fetchRecipes: async () => {
       const res = await getInitialData();
-      const transformedIngredients: Record<string, IngredientType> = {};
-      res.ingredients.forEach((i) => (transformedIngredients[i.id] = i));
       set({
         recipes: res.recipes,
         ingredients: res.ingredients,
-        transformedIngredients,
+        transformedIngredients: transformIngredients(res.ingredients),
       });
     },
     deleteRecipe: async (id: string) => {
@@ -53,10 +52,15 @@ export const useCookStore = create<CookStore>((set) => ({
     deleteIngredient: async (id: string) => {
       return deleteIngredient(id).then((res) => {
         if (res.status === 200) {
-          set((state) => ({
-            ...state,
-            ingredients: state.ingredients.filter((ing) => ing.id !== id),
-          }));
+          set((state) => {
+            const updated = { ...state.transformedIngredients };
+            delete updated[id];
+            return {
+              ...state,
+              ingredients: state.ingredients.filter((ing) => ing.id !== id),
+              transformedIngredients: updated,
+            };
+          });
         }
         return res;
       });
@@ -67,6 +71,10 @@ export const useCookStore = create<CookStore>((set) => ({
           set((state) => ({
             ...state,
             ingredients: [...state.ingredients, res.ingredient],
+            transformedIngredients: {
+              ...state.transformedIngredients,
+              [res.ingredient.id]: res.ingredient,
+            },
           }));
         }
         return res;
@@ -85,3 +93,6 @@ export const useRecipesActions = () =>
 
 export const useIngredientsActions = () =>
   useCookStore((state) => state.ingredientActions);
+
+export const useIngredientById = (id: string | undefined) =>
+  useCookStore((state) => (id ? state.transformedIngredients[id] : undefined));
