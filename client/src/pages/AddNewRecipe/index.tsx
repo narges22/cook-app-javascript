@@ -119,8 +119,8 @@ const AddNewRecipe = () => {
           </div>
         </div>
         <p className="text-left pt-5 pb-3">Choose the ingredients</p>
-        <div className="flex gap-3">
-          <div className="flex flex-col items-start gap-2 w-full">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col items-start gap-2 w-full col-12 sm:col-6">
             <label htmlFor="ingredient" className="text-gray-600">
               Ingredient *
             </label>
@@ -135,7 +135,7 @@ const AddNewRecipe = () => {
               disabled={loading}
             />
           </div>
-          <div className="flex flex-col items-start gap-2 w-full">
+          <div className="flex flex-col items-start gap-2 w-full col-12 sm:col-6">
             <label htmlFor="quantity" className="text-gray-600">
               Quantity
             </label>
@@ -155,12 +155,12 @@ const AddNewRecipe = () => {
             />
           </div>
 
-          <div className="flex items-end">
+          <div className="flex items-end col-12 sm:col-auto">
             <Button
               label="Save"
               type="button"
               onClick={addIngredient}
-              className="w-full"
+              className="w-full sm:w-auto"
               outlined
               disabled={
                 loading || !formik.values.ingredient || !formik.values.quantity
