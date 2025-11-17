@@ -7,14 +7,17 @@ import { categoryOptions, unitOptions, validationSchema } from "./helper";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "primereact/dropdown";
 import { Divider } from "primereact/divider";
+import { showSuccess } from "../../utils/toast";
 
 interface FormValues {
   name: string;
   category: string;
   unit: string;
 }
-
-const AddNewIngredient = () => {
+interface AddNewIngredientProps {
+  toast: React.RefObject<any>;
+}
+const AddNewIngredient = ({ toast }: AddNewIngredientProps) => {
   const { addIngredient } = useIngredientsActions();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -35,8 +38,9 @@ const AddNewIngredient = () => {
           unit: values.unit,
         });
         if (res.ingredient) {
+          showSuccess(toast, "Ingredient added successfully");
           formik.resetForm();
-          navigate("/");
+          navigate("/ingredients");
         }
       } catch (error) {
         console.error("Error adding ingredient:", error);

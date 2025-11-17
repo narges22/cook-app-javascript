@@ -1,6 +1,6 @@
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import { useState } from "react";
+import { RefObject, useState } from "react";
 import { useIngredients, useRecipesActions } from "../../store/store";
 import { useFormik } from "formik";
 import { IngredientListType } from "../../utils/types";
@@ -10,6 +10,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { useNavigate } from "react-router-dom";
 import { Divider } from "primereact/divider";
 import IngredientChip from "../../componenets/IngredientChip";
+import { showSuccess } from "../../utils/toast";
 
 interface FormValues {
   name: string;
@@ -17,8 +18,10 @@ interface FormValues {
   ingredient: string;
   quantity: number;
 }
-
-const AddNewRecipe = () => {
+interface AddNewRecipeProps {
+  toast: RefObject<any>;
+}
+const AddNewRecipe = ({ toast }: AddNewRecipeProps) => {
   const ingredientsData = useIngredients();
 
   const { addRecipe } = useRecipesActions();
@@ -41,6 +44,7 @@ const AddNewRecipe = () => {
           ingredients: values.ingredients,
         });
         if (res.recipe) {
+          showSuccess(toast, "Recipe added successfully");
           formik.resetForm();
           navigate("/");
         }
