@@ -6,7 +6,7 @@ import {
 } from "../api/type";
 import { IngredientType, RecipeType } from "../utils/types";
 
-export type RecepiesSlice = {
+export type RecipesSlice = {
   recipes: RecipeType[];
   recipeActions: {
     setRecipes: (recipes: RecipeType[]) => void;
@@ -27,4 +27,4 @@ export type IngredientsSlice = {
   };
 };
 
-export interface CookStore extends RecepiesSlice, IngredientsSlice {}
+export interface CookStore extends RecipesSlice, IngredientsSlice {}

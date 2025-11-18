@@ -6,7 +6,7 @@ import { formatIngredients } from "../../utils/helper";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
 
-const RecepiesTable = () => {
+const RecipesTable = () => {
   const recipesData = useRecipes();
   const { deleteRecipe } = useRecipesActions();
   const navigate = useNavigate();
@@ -56,4 +56,4 @@ const RecepiesTable = () => {
   );
 };
 
-export default RecepiesTable;
+export default RecipesTable;
