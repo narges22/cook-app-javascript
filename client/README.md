@@ -22,6 +22,9 @@ the bast choices
 - StateManagement: Zustand
 - Handle Forms: Formik
 
+- backend :
+  node.js
+
 **----------------------------------**
 Defining the types
 
