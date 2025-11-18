@@ -3,7 +3,7 @@
 # How to run the FE
 
     in the client folder run following commands:
-    1) `npm install'
+    1) `npm install`
     2) `npm run dev`
 
 **----------------------------------**
