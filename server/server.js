@@ -161,8 +161,20 @@ app.delete("/api/ingredients/:id", (req, res) => {
       return res.status(404).json({ message: "Ingredient not found" });
     }
 
+    // Remove ingredient reference from every recipe
+    const updatedRecipes = data.recipes.map((recipe) => {
+      const filteredIngredients = recipe.ingredients.filter(
+        (ing) => ing.ingredientId !== ingredientId
+      );
+      return {
+        ...recipe,
+        ingredients: filteredIngredients,
+      };
+    });
+
     // Remove ingredient from ingredients array
     data.ingredients.splice(ingredientIndex, 1);
+    data.recipes = updatedRecipes;
     fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 
     res.json({
