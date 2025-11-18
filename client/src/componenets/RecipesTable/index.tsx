@@ -14,6 +14,7 @@ const RecepiesTable = () => {
   const renderActions = (rowData: RecipeType) => {
     return (
       <Button
+        id="delete-recipe"
         icon="pi pi-trash"
         rounded
         severity="danger"

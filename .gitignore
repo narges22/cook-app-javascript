@@ -19,3 +19,7 @@ build/
 .vite/
 
 .DS_Store
+
+# playwright
+playwright-report/
+test-results/

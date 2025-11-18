@@ -34,7 +34,7 @@ const AddNewRecipe = ({ toast }: AddNewRecipeProps) => {
       name: "",
       ingredients: [],
       ingredient: "",
-      quantity: 1,
+      quantity: 0,
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -75,7 +75,7 @@ const AddNewRecipe = ({ toast }: AddNewRecipeProps) => {
         ...formik.values,
         ingredients: [...formik.values.ingredients, newIngredient],
         ingredient: "",
-        quantity: 1,
+        quantity: 0,
       });
     }
   };
@@ -152,10 +152,10 @@ const AddNewRecipe = ({ toast }: AddNewRecipeProps) => {
               name="quantity"
               value={formik.values.quantity}
               onValueChange={(e) =>
-                formik.setFieldValue("quantity", e.value || 1)
+                formik.setFieldValue("quantity", e.value || 0)
               }
               onBlur={formik.handleBlur}
-              min={1}
+              min={0}
               step={1}
               showButtons
               className="w-full"

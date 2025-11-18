@@ -13,6 +13,7 @@ const IngredientsTable = () => {
   const renderActions = (rowData: IngredientType) => {
     return (
       <Button
+        id="delete-ingredient"
         icon="pi pi-trash"
         rounded
         outlined
