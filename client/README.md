@@ -34,6 +34,7 @@ what are the types of entities we have to align back end and front end code and 
 I think it's an important part and should be in one of the first things to do
 
 **----------------------------------**
+
 Set up the state manager
 
 Why Zustand?
