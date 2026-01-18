@@ -1,4 +1,4 @@
-# front-end-test-4h1B
+# My Cooking App Example with React.js and Node.js
 
 Greetings!
 
